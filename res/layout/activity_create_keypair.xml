@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ This file is part of A3 - Android Authentication Agent
+  ~ Copyright (c) 2012. riku salkia <riksa@iki.fi>
+  ~ TODO: License ;)
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <fragment class="org.riksa.a3.fragment.CreateKeyPairFragment" android:id="@+id/fragment_create_keypair"
+              android:layout_width="match_parent" android:layout_height="match_parent"/>
+
+</LinearLayout>

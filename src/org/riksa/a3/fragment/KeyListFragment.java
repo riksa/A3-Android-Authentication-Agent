@@ -7,6 +7,7 @@
 package org.riksa.a3.fragment;
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import org.riksa.a3.R;
+import org.riksa.a3.activity.CreateKeyPairActivity;
 import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -24,7 +26,7 @@ import org.slf4j.Logger;
  */
 public class KeyListFragment extends ListFragment {
     private static final Logger log = LoggerFactory.getLogger(KeyListFragment.class);
-    private Menu optionsMenu = null;
+    private static final int CREATE_KEY_INTENT = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,7 +86,7 @@ public class KeyListFragment extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_create:
-                log.debug("TODO: create key");
+                startKeyCreation();
                 break;
             case R.id.menu_import:
                 log.debug("TODO: import key");
@@ -93,6 +95,13 @@ public class KeyListFragment extends ListFragment {
                 log.warn("Unhandled menu item clicked");
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startKeyCreation() {
+        // for now, just a separate activity. fragments later (maybe?)
+        Intent intent = new Intent( getActivity(), CreateKeyPairActivity.class );
+        startActivityForResult( intent, CREATE_KEY_INTENT );
+
     }
 
     void showDetails(int index) {

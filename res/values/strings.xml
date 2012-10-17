@@ -8,4 +8,12 @@
 <resources>
     <!-- Strings that do not need localization -->
     <string name="app_name">Public Key Agent</string>
+
+    <!-- Key strength spinner -->
+    <string-array name="pk_strength_entries">
+        <item>1024</item>
+        <item>2048</item>
+        <item>4096</item>
+    </string-array>
+
 </resources>

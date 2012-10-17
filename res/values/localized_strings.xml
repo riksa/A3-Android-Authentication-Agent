@@ -17,4 +17,25 @@
     <string name="menu_copy_public_key">Copy Public Key</string>
     <string name="menu_delete">Delete</string>
 
+    <!-- public key creation -->
+    <string name="pk_name_label">Key name</string>
+    <string name="pk_name_hint">@string/pk_name_label</string>
+
+    <string name="pk_type_label">Key type</string>
+    <string name="pk_strength_label">Key strength</string>
+    <string name="pk_strength_prompt">Key strength</string>
+
+    <string name="pk_password_label">Password</string>
+    <string name="pk_password_hint">@string/pk_password_label</string>
+
+    <string name="pk_password2_label">Password (again)</string>
+    <string name="pk_password2_hint">@string/pk_password2_label</string>
+
+    <string name="pk_randomness">Generate randomness</string>
+    <string name="pk_generate_text">Generate</string>
+
+    <string name="pk_invalid_input">Invalid input</string>
+    <string name="pk_invalid_pk_alg">Cannot use selected algorithm</string> <!-- should not happen -->
+
+
 </resources>
