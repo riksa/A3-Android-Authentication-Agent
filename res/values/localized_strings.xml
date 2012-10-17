@@ -8,4 +8,10 @@
 <resources>
     <!-- Strings that should be localized -->
     <string name="keylist_empty">You do not have any keypairs. Create or import some.</string>
+
+    <!-- menu items -->
+    <string name="menu_create">Create</string>
+    <string name="menu_import">Import</string>
+    <string name="menu_delete">Delete</string>
+
 </resources>
