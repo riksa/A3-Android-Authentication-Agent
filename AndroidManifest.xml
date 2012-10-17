@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of A3 - Android Authentication Agent
+  ~ Copyright (c) 2012. riku salkia <riksa@iki.fi>
+  ~ TODO: License ;)
+  -->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.riksa.a3"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="15"/>
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="15"/>
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
         <activity android:name=".activity.ConfigurationActivity"
                   android:label="@string/app_name">
