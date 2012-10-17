@@ -9,8 +9,10 @@ package org.riksa.a3.fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.*;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import org.riksa.a3.R;
 import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
@@ -22,17 +24,19 @@ import org.slf4j.Logger;
  */
 public class KeyListFragment extends ListFragment {
     private static final Logger log = LoggerFactory.getLogger(KeyListFragment.class);
+    private Menu optionsMenu = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_keylist, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, new String[]{}));
+        setHasOptionsMenu(true);
+        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, new String[]{"Key 1", "Key 2"}));
+        registerForContextMenu(getListView());
     }
 
     @Override
@@ -43,6 +47,49 @@ public class KeyListFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_key_list, menu);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater = getActivity().getMenuInflater();
+        menuInflater.inflate(R.menu.menu_key_list_context, menu);
+    }
+
+    private <T extends View> T findView(Class<? extends View> clazz, int id) {
+        View view = getActivity().findViewById(id);
+        if (view != null && view.getClass().isAssignableFrom(clazz)) {
+            return (T) view;
+        }
+        log.error("Cannot find view of class {} with id {}", clazz.toString(), id);
+        return null;
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_delete:
+                log.debug("TODO: delete key");
+                break;
+            default:
+                log.warn("Unhandled menu item clicked");
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_create:
+                log.debug("TODO: create key");
+                break;
+            case R.id.menu_import:
+                log.debug("TODO: import key");
+                break;
+            default:
+                log.warn("Unhandled menu item clicked");
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     void showDetails(int index) {
