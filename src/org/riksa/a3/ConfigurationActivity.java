@@ -1,3 +1,9 @@
+/*
+ * This file is part of A3 - Android Authentication Agent
+ * Copyright (c) 2012. riku salkia <riksa@iki.fi>
+ * TODO: License ;)
+ */
+
 package org.riksa.a3;
 
 import android.app.Activity;
