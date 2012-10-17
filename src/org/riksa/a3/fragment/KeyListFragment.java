@@ -71,6 +71,9 @@ public class KeyListFragment extends ListFragment {
             case R.id.menu_delete:
                 log.debug("TODO: delete key");
                 break;
+            case R.id.menu_copy_public_key:
+                log.debug("TODO: copy public key");
+                break;
             default:
                 log.warn("Unhandled menu item clicked");
         }

@@ -12,4 +12,9 @@
           android:title="@string/menu_delete"
           android:showAsAction="ifRoom|withText"/>
 
+    <item android:id="@+id/menu_copy_public_key"
+          android:icon="@drawable/ic_menu_copy"
+          android:title="@string/menu_copy_public_key"
+          android:showAsAction="ifRoom|withText"/>
+
 </menu>

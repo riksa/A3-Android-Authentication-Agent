@@ -12,6 +12,9 @@
     <!-- menu items -->
     <string name="menu_create">Create</string>
     <string name="menu_import">Import</string>
+
+    <!-- context menu items -->
+    <string name="menu_copy_public_key">Copy Public Key</string>
     <string name="menu_delete">Delete</string>
 
 </resources>
