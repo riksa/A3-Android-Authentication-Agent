@@ -1,0 +1,15 @@
+<!--
+  ~ This file is part of A3 - Android Authentication Agent
+  ~ Copyright (c) 2012. riku salkia <riksa@iki.fi>
+  ~ TODO: License ;)
+  -->
+
+<resources>
+    <style name="fragment_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    <style name="fragment_layout_keylist" parent="fragment_layout">
+    </style>
+</resources>

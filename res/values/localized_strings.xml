@@ -6,6 +6,6 @@
   -->
 
 <resources>
-    <!-- Strings that do not need localization -->
-    <string name="app_name">A3 :: Android Authentication Agent</string>
+    <!-- Strings that should be localized -->
+    <string name="keylist_empty">You do not have any keypairs. Create or import some.</string>
 </resources>

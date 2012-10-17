@@ -4,10 +4,11 @@
  * TODO: License ;)
  */
 
-package org.riksa.a3;
+package org.riksa.a3.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import org.riksa.a3.R;
 
 public class ConfigurationActivity extends Activity {
     /**
@@ -16,6 +17,6 @@ public class ConfigurationActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_configuration);
     }
 }
