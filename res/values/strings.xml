@@ -7,5 +7,5 @@
 
 <resources>
     <!-- Strings that do not need localization -->
-    <string name="app_name">A3 :: Android Authentication Agent</string>
+    <string name="app_name">Public Key Agent</string>
 </resources>
