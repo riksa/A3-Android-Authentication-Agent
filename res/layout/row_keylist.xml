@@ -6,32 +6,43 @@
   ~ TODO: License ;)
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
               android:padding="4dp">
 
     <TextView android:id="@+id/col_keyname"
-              android:padding="4dp"
-              android:text="Key name"
-              android:textSize="16sp"
-              android:textStyle="bold"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"/>
+              android:layout_alignParentLeft="true"
+              android:layout_centerInParent="true"
+              style="@style/col_keyname"
+              android:text="Key name" />
 
     <TextView android:id="@+id/col_keytype"
-              android:padding="4dp"
-              android:text="RSA"
-              android:textSize="16sp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"/>
+              android:layout_toLeftOf="@+id/col_keystrength"
+              android:layout_centerInParent="true"
+              style="@style/col_keytype"
+              android:text="RSA" />
 
     <TextView android:id="@+id/col_keystrength"
-              android:padding="4dp"
-              android:text="1024"
-              android:textSize="16sp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"/>
+              style="@style/col_keystrength"
+              android:layout_toLeftOf="@+id/col_iconswitcher"
+              android:layout_centerInParent="true"
+              android:text="1024" />
 
-</LinearLayout>
+    <ViewSwitcher android:id="@+id/col_iconswitcher"
+                  android:layout_alignParentRight="true"
+                  android:layout_width="48dp"
+                  android:layout_height="48dp">
+        <ProgressBar android:id="@+id/col_progress"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"/>
+        <ImageView android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:src="@drawable/ic_lock"/>
+
+    </ViewSwitcher>
+
+
+
+</RelativeLayout>

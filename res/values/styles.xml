@@ -19,6 +19,19 @@
         <item name="android:padding">8dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_vertical</item>
     </style>
+
+    <style name="col">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="col_keyname" parent="col">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="col_keytype" parent="col"></style>
+    <style name="col_keystrength" parent="col"></style>
 </resources>
