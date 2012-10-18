@@ -16,8 +16,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import org.riksa.a3.R;
 import org.riksa.a3.activity.CreateKeyPairActivity;
+import org.riksa.a3.model.A3Key;
 import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * User: riksa
@@ -37,7 +43,10 @@ public class KeyListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, new String[]{"Key 1", "Key 2"}));
+        List<A3Key> keys = new ArrayList<A3Key>();
+        keys.add(new A3Key("foo", null));
+        keys.add(new A3Key("bar", null));
+        setListAdapter(KeyListSimpleAdapter.create(getActivity(), Collections.unmodifiableList(keys)));
         registerForContextMenu(getListView());
     }
 
@@ -99,8 +108,8 @@ public class KeyListFragment extends ListFragment {
 
     private void startKeyCreation() {
         // for now, just a separate activity. fragments later (maybe?)
-        Intent intent = new Intent( getActivity(), CreateKeyPairActivity.class );
-        startActivityForResult( intent, CREATE_KEY_INTENT );
+        Intent intent = new Intent(getActivity(), CreateKeyPairActivity.class);
+        startActivityForResult(intent, CREATE_KEY_INTENT);
 
     }
 
