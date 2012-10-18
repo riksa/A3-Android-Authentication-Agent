@@ -17,6 +17,7 @@ import org.riksa.a3.R;
 import org.riksa.a3.activity.CreateKeyPairActivity;
 import org.riksa.a3.exception.InvalidInputException;
 import org.riksa.a3.exception.ViewNotFoundException;
+import org.riksa.a3.model.KeyChain;
 import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -32,8 +33,6 @@ import java.security.SecureRandom;
  */
 public class CreateKeyPairFragment extends Fragment {
     private static final Logger log = LoggerFactory.getLogger(CreateKeyPairFragment.class);
-    private static final String EXTRA_KEY_NAME = "extra_key_name";
-    private static final String EXTRA_KEY_KEYPAIR = "extra_key_keypair";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,28 +59,13 @@ public class CreateKeyPairFragment extends Fragment {
             log.debug("Key type {}", getKeyType());
             log.debug("Key bits {}", getKeyBits());
 
-            // TODO: AsyncTask
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(getKeyType());
-            keyPairGenerator.initialize(getKeyBits(), new SecureRandom()); // TODO: securerandom generation?
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
-
-            log.debug("Public key format {}", keyPair.getPublic().getFormat());
-            log.debug("Private key format {}", keyPair.getPrivate().getFormat());
-
-            Intent data = new Intent();
-            data.putExtra(EXTRA_KEY_NAME, getKeyName());
-            data.putExtra(EXTRA_KEY_KEYPAIR, keyPair);
-
-            getActivity().setResult(Activity.RESULT_OK, data);
+            KeyChain.getInstance().generateKeyAsync( getKeyName(), getKeyType(), getKeyBits() );
             getActivity().finish(); // this has to be changed if we are using single activity at some point
         } catch (InvalidInputException e) {
             log.warn("TODO: handle specific cases");
             Toast.makeText(getActivity(), R.string.pk_invalid_input, Toast.LENGTH_SHORT).show();
         } catch (ViewNotFoundException e) {
             log.error(e.getMessage(), e);
-        } catch (NoSuchAlgorithmException e) {
-            log.error(e.getMessage(), e);
-            Toast.makeText(getActivity(), R.string.pk_invalid_pk_alg, Toast.LENGTH_SHORT).show();
         }
     }
 

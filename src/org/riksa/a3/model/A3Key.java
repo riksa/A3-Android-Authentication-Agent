@@ -19,9 +19,7 @@ import java.security.KeyPair;
 public class A3Key {
     private static final Logger log = LoggerFactory.getLogger(A3Key.class);
 
-    public enum Type {RSA, DSA}
-
-    ;
+    public enum Type {RSA, DSA, UNKNOWN};
     private String keyName;
     private KeyPair keyPair;
 
@@ -30,15 +28,25 @@ public class A3Key {
         this.keyPair = keyPair;
     }
 
+    public void setKeyPair(KeyPair keyPair) {
+        this.keyPair = keyPair;
+    }
+
     public String getKeyName() {
         return keyName;
     }
 
     public Type getKeyType() {
-        return Type.RSA;
+        if( keyPair == null ) {
+            return Type.UNKNOWN;
+        }
+        return Type.UNKNOWN;
     }
 
     public int getKeyStrength() {
+        if( keyPair == null ) {
+            return -1;
+        }
         return 666;
     }
 }

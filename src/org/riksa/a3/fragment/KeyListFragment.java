@@ -17,6 +17,7 @@ import android.widget.TextView;
 import org.riksa.a3.R;
 import org.riksa.a3.activity.CreateKeyPairActivity;
 import org.riksa.a3.model.A3Key;
+import org.riksa.a3.model.KeyChain;
 import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -34,19 +35,42 @@ public class KeyListFragment extends ListFragment {
     private static final Logger log = LoggerFactory.getLogger(KeyListFragment.class);
     private static final int CREATE_KEY_INTENT = 1;
 
+    Runnable setKeysRunnable = new Runnable() {
+        public void run() {
+            setKeys(KeyChain.getInstance().getUnmodifiableKeys());
+        }
+    };
+
+    KeyChain.KeyChainListener keyChainListener = new KeyChain.KeyChainListener() {
+        public void keyChainChanged() {
+            log.debug("keyChainChanged, keyCount={}", KeyChain.getInstance().getUnmodifiableKeys().size());
+            getActivity().runOnUiThread(setKeysRunnable);
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_keylist, container, false);
+        View view = inflater.inflate(R.layout.fragment_keylist, container, false);
+        KeyChain.getInstance().addListener(keyChainListener);
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        KeyChain.getInstance().removeListener(keyChainListener);
+        super.onDestroyView();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-        List<A3Key> keys = new ArrayList<A3Key>();
-        keys.add(new A3Key("foo", null));
-        keys.add(new A3Key("bar", null));
-        setListAdapter(KeyListSimpleAdapter.create(getActivity(), Collections.unmodifiableList(keys)));
+        setKeys(KeyChain.getInstance().getUnmodifiableKeys());
+    }
+
+    private void setKeys(List<A3Key> keys) {
+        log.debug("setKeys, size={}", keys.size());
+        setListAdapter(KeyListSimpleAdapter.create(getActivity(), keys));
         registerForContextMenu(getListView());
     }
 
