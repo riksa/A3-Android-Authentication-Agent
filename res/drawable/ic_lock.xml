@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ This file is part of A3 - Android Authentication Agent
+  ~ Copyright (c) 2012. riku salkia <riksa@iki.fi>
+  ~ TODO: License ;)
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true"  android:drawable="@drawable/ic_lock_locked"/>
+    <item android:state_checked="false" android:drawable="@drawable/ic_lock_unlocked"/>
+</selector>
