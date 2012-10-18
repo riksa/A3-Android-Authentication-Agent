@@ -40,7 +40,7 @@ public class A3Key {
         if( keyPair == null ) {
             return Type.UNKNOWN;
         }
-        return Type.UNKNOWN;
+        return Type.RSA;
     }
 
     public int getKeyStrength() {
