@@ -29,6 +29,7 @@ import java.util.Map;
  */
 public class KeyListSimpleAdapter extends SimpleAdapter {
     private static final Logger log = LoggerFactory.getLogger(SimpleAdapter.class);
+    private static final String KEYID = "id";
     private static final String KEYNAME = "name";
     private static final String KEYTYPE = "type";
     private static final String KEYSTRENGTH = "strength";
@@ -39,6 +40,7 @@ public class KeyListSimpleAdapter extends SimpleAdapter {
         List<Map<String, ?>> data = new ArrayList<Map<String, ?>>();
         for (A3Key key : a3Keys) {
             Map<String, Object> entry = new HashMap<String, Object>();
+            entry.put(KEYID, key.getKeyId());
             entry.put(KEYNAME, key.getKeyName());
             entry.put(KEYTYPE, key.getKeyType().toString());
             entry.put(KEYSTRENGTH, Integer.toString(key.getKeyStrength()));
@@ -70,6 +72,11 @@ public class KeyListSimpleAdapter extends SimpleAdapter {
                 viewSwitcher.showPrevious();
             }
         }
+    }
+
+    public String getKeyIdAtPosition( int position ) {
+        Map<String, Object> entry = (Map<String, Object>) getItem( position );
+        return (String) entry.get(KEYID);
     }
 
 

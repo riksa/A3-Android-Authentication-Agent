@@ -76,7 +76,6 @@ public class KeyListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        showDetails(position);
     }
 
     @Override
@@ -102,12 +101,19 @@ public class KeyListFragment extends ListFragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        KeyListSimpleAdapter adapter = (KeyListSimpleAdapter) getListAdapter();
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        String id = adapter.getKeyIdAtPosition(menuInfo.position);
+        A3Key key = KeyChain.getInstance().getKeyWithId(id);
+
         switch (item.getItemId()) {
             case R.id.menu_delete:
-                log.debug("TODO: delete key");
+                KeyChain.getInstance().removeKey(key);
                 break;
             case R.id.menu_copy_public_key:
-                log.debug("TODO: copy public key");
+                if( key != null ) {
+                    log.debug("Public key={}", key.getPublicKey() );
+                }
                 break;
             default:
                 log.warn("Unhandled menu item clicked");

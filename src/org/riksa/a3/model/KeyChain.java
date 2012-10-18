@@ -51,6 +51,17 @@ public class KeyChain {
         return executorService;
     }
 
+    public A3Key getKeyWithId(String id) {
+        if (id != null) {
+            for (A3Key key : keys) {
+                if (id.equals(key.getKeyId())) {
+                    return key;
+                }
+            }
+        }
+        return null;
+    }
+
     private class KeyDefinition {
         String keyName;
         String keyType;
@@ -119,7 +130,7 @@ public class KeyChain {
 
     }
 
-    private void addKey(A3Key key) {
+    public void addKey(A3Key key) {
         synchronized (keys) {
             if (!keys.contains(key)) {
                 keys.add(key);
@@ -128,7 +139,7 @@ public class KeyChain {
         }
     }
 
-    private void removeKey(A3Key key) {
+    public void removeKey(A3Key key) {
         synchronized (keys) {
             if (keys.contains(key)) {
                 keys.remove(key);

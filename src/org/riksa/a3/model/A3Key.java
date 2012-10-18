@@ -10,6 +10,8 @@ import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
 
 import java.security.KeyPair;
+import java.security.PublicKey;
+import java.util.UUID;
 
 /**
  * User: riksa
@@ -18,14 +20,23 @@ import java.security.KeyPair;
  */
 public class A3Key {
     private static final Logger log = LoggerFactory.getLogger(A3Key.class);
-
+    private String keyId;
     public enum Type {RSA, DSA, UNKNOWN};
     private String keyName;
     private KeyPair keyPair;
 
     public A3Key(String keyName, KeyPair keyPair) {
+        this.keyId = UUID.randomUUID().toString();
         this.keyName = keyName;
         this.keyPair = keyPair;
+    }
+
+    public PublicKey getPublicKey() {
+        return keyPair.getPublic();
+    }
+
+    public String getKeyId() {
+        return keyId;
     }
 
     public void setKeyPair(KeyPair keyPair) {
