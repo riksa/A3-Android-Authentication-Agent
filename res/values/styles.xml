@@ -34,4 +34,8 @@
     </style>
     <style name="col_keytype" parent="col"></style>
     <style name="col_keystrength" parent="col"></style>
+    <style name="button_browse_file">
+        <item name="android:drawableLeft">@drawable/ic_btn_search</item>
+        <item name="android:text">@string/pk_btn_browse_text</item>
+    </style>
 </resources>

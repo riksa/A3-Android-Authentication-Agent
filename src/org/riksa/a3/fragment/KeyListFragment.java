@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import org.riksa.a3.R;
 import org.riksa.a3.activity.CreateKeyPairActivity;
+import org.riksa.a3.activity.ImportKeyPairActivity;
 import org.riksa.a3.model.A3Key;
 import org.riksa.a3.model.KeyChain;
 import org.riksa.a3.util.LoggerFactory;
@@ -29,6 +30,7 @@ import java.util.List;
 public class KeyListFragment extends ListFragment {
     private static final Logger log = LoggerFactory.getLogger(KeyListFragment.class);
     private static final int CREATE_KEY_INTENT = 1;
+    private static final int IMPORT_KEY_INTENT = 2;
 
     Runnable setKeysRunnable = new Runnable() {
         public void run() {
@@ -123,7 +125,7 @@ public class KeyListFragment extends ListFragment {
                 startKeyCreation();
                 break;
             case R.id.menu_import:
-                log.debug("TODO: import key");
+                startKeyImport();
                 break;
             default:
                 log.warn("Unhandled menu item clicked");
@@ -135,6 +137,13 @@ public class KeyListFragment extends ListFragment {
         // for now, just a separate activity. fragments later (maybe?)
         Intent intent = new Intent(getActivity(), CreateKeyPairActivity.class);
         startActivityForResult(intent, CREATE_KEY_INTENT);
+
+    }
+
+    private void startKeyImport() {
+        // for now, just a separate activity. fragments later (maybe?)
+        Intent intent = new Intent(getActivity(), ImportKeyPairActivity.class);
+        startActivityForResult(intent, IMPORT_KEY_INTENT);
 
     }
 

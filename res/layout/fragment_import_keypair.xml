@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ This file is part of A3 - Android Authentication Agent
+  ~ Copyright (c) 2012. riku salkia <riksa@iki.fi>
+  ~ TODO: License ;)
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="4dp"
+              style="@style/fragment_layout_create_keypair">
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:autoLink="all"
+              android:text="@string/help_text_import_key"/>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1">
+        <TableLayout
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dip">
+
+            <!-- Private key -->
+            <TableRow>
+                <TextView style="@style/label" android:text="@string/pk_private_key_path_label"/>
+                <EditText android:id="@+id/pk_private_key_path"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1"
+                          android:hint="@string/pk_private_key_path_hint" android:singleLine="true"/>
+                <Button style="@style/button_browse_file"
+                        android:id="@+id/pk_btn_browse_private"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </TableRow>
+            <TableRow>
+                <ImageView android:id="@+id/pk_icon_private_key_valid"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:layout_gravity="right"
+                           android:src="@drawable/btn_check_buttonless_off"/>
+                <TextView android:id="@+id/pk_text_private_key_valid"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:text="@string/pk_text_private_key_invalid"/>
+            </TableRow>
+
+            <!-- Public key -->
+            <TableRow>
+                <TextView style="@style/label" android:text="@string/pk_public_key_path_label"/>
+                <EditText android:id="@+id/pk_public_key_path"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1"
+                          android:hint="@string/pk_public_key_path_hint" android:singleLine="true"/>
+                <Button style="@style/button_browse_file"
+                        android:id="@+id/pk_btn_browse_public"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </TableRow>
+            <TableRow>
+                <ImageView android:id="@+id/pk_icon_public_key_valid"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:layout_gravity="right"
+                           android:src="@drawable/btn_check_buttonless_off"/>
+                <TextView android:id="@+id/pk_text_public_key_valid"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:text="@string/pk_text_public_key_invalid"/>
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+    <Button android:id="@+id/pk_import_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:enabled="false"
+            android:text="@string/pk_import_text"/>
+
+</LinearLayout>

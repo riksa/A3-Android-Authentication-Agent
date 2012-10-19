@@ -19,5 +19,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.CreateKeyPairActivity"/>
+        <activity android:name=".activity.ImportKeyPairActivity"/>
     </application>
 </manifest>

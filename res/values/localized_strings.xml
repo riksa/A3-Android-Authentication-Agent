@@ -37,5 +37,17 @@
     <string name="pk_invalid_input">Invalid input</string>
     <string name="pk_invalid_pk_alg">Cannot use selected algorithm</string> <!-- should not happen -->
 
+    <!-- import key pair -->
+    <string name="help_text_import_key">Browsing for files requires OI File Manager http://play.google.com/store/apps/details?id=org.openintents.filemanager </string>
+    <string name="pk_private_key_path_label">Private key</string>
+    <string name="pk_public_key_path_label">Public key</string>
+    <string name="pk_private_key_path_hint">Paste Private key here or browse for a file</string>
+    <string name="pk_public_key_path_hint">Paste Public key here or browse for a file</string>
+    <string name="pk_btn_browse_text">Browse</string>
+    <string name="pk_import_text">Import</string>
+    <string name="pk_text_private_key_invalid">Choose a valid Private key</string>
+    <string name="pk_text_private_key_valid">Valid Private key: %1$s/%2$s</string>
+    <string name="pk_text_public_key_invalid">Choose a valid Public key</string>
+    <string name="pk_text_public_key_valid">Valid Public key: %1$s/%2$s</string>
 
 </resources>
