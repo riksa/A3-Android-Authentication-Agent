@@ -64,12 +64,11 @@ public class KeyListSimpleAdapter extends SimpleAdapter {
     private void switchToProgress(View view, boolean showProgress) {
         log.debug("switchToProgress {}", showProgress);
         ViewSwitcher viewSwitcher = (ViewSwitcher) view.findViewById(R.id.col_iconswitcher);
-        View progress = view.findViewById(R.id.col_progress);
-        if (viewSwitcher != null && progress != null) {
-            log.debug("Got views");
-            if (!progress.isShown() ^ showProgress) {
+        if (viewSwitcher != null ) {
+            boolean progressShown = viewSwitcher.getCurrentView().getId() == R.id.col_progress;
+            if (progressShown ^ showProgress) {
                 log.debug("Flipping");
-                viewSwitcher.showPrevious();
+                viewSwitcher.showNext();
             }
         }
     }
