@@ -6,8 +6,8 @@
 
 package org.riksa.a3.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import org.riksa.a3.R;
 
 /**
@@ -15,7 +15,7 @@ import org.riksa.a3.R;
  * Date: 17.10.2012
  * Time: 22:29
  */
-public class CreateKeyPairActivity extends Activity {
+public class CreateKeyPairActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_keypair);

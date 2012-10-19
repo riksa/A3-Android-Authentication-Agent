@@ -6,11 +6,11 @@
 
 package org.riksa.a3.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import org.riksa.a3.R;
 
-public class ConfigurationActivity extends Activity {
+public class ConfigurationActivity extends FragmentActivity {
     /**
      * Called when the activity is first created.
      */

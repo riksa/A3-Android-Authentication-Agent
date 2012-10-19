@@ -6,14 +6,12 @@
 
 package org.riksa.a3.fragment;
 
-import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.*;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import org.riksa.a3.R;
 import org.riksa.a3.activity.CreateKeyPairActivity;
 import org.riksa.a3.model.A3Key;
@@ -21,9 +19,6 @@ import org.riksa.a3.model.KeyChain;
 import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -111,8 +106,8 @@ public class KeyListFragment extends ListFragment {
                 KeyChain.getInstance().removeKey(key);
                 break;
             case R.id.menu_copy_public_key:
-                if( key != null ) {
-                    log.debug("Public key={}", key.getPublicKey() );
+                if (key != null) {
+                    log.debug("Public key={}", key.getPublicKey());
                 }
                 break;
             default:

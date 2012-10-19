@@ -15,51 +15,60 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-        <GridLayout
+        <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnCount="2">
+                android:layout_height="match_parent">
 
             <!-- Key Name -->
-            <TextView style="@style/label" android:text="@string/pk_name_label"/>
-            <EditText android:id="@+id/pk_name"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:hint="@string/pk_name_hint" android:singleLine="true"/>
+            <TableRow>
+                <TextView style="@style/label" android:text="@string/pk_name_label"/>
+                <EditText android:id="@+id/pk_name"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:hint="@string/pk_name_hint" android:singleLine="true"/>
+            </TableRow>
 
             <!-- Key type DSA/RSA -->
-            <TextView style="@style/label" android:text="@string/pk_type_label"/>
-            <RadioGroup android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:checkedButton="@+id/pk_type_dsa">
-                <RadioButton android:id="@+id/pk_type_rsa" android:layout_width="wrap_content"
-                             android:layout_height="wrap_content" android:text="RSA" android:checked="true"/>
-                <RadioButton android:id="@+id/pk_type_dsa" android:layout_width="wrap_content"
-                             android:layout_height="wrap_content" android:text="DSA"/>
-            </RadioGroup>
+            <TableRow>
+                <TextView style="@style/label" android:text="@string/pk_type_label"/>
+                <RadioGroup android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:checkedButton="@+id/pk_type_dsa">
+                    <RadioButton android:id="@+id/pk_type_rsa" android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content" android:text="RSA" android:checked="true"/>
+                    <RadioButton android:id="@+id/pk_type_dsa" android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content" android:text="DSA"/>
+                </RadioGroup>
+            </TableRow>
 
             <!-- Key strength 1024/2048/4096 bits -->
-            <TextView style="@style/label" android:text="@string/pk_strength_label"/>
-            <Spinner android:id="@+id/pk_strength" android:layout_width="match_parent"
-                     android:layout_height="wrap_content" android:entries="@array/pk_strength_entries"
-                     android:prompt="@string/pk_strength_prompt"/>
+            <TableRow>
+                <TextView style="@style/label" android:text="@string/pk_strength_label"/>
+                <Spinner android:id="@+id/pk_strength" android:layout_width="match_parent"
+                         android:layout_height="wrap_content" android:entries="@array/pk_strength_entries"
+                         android:prompt="@string/pk_strength_prompt"/>
+            </TableRow>
 
             <!-- Password 1 -->
-            <TextView style="@style/label" android:text="@string/pk_password_label"/>
-            <EditText android:id="@+id/pk_password"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:hint="@string/pk_password_hint"
-                      android:inputType="textPassword"/>
+            <TableRow>
+                <TextView style="@style/label" android:text="@string/pk_password_label"/>
+                <EditText android:id="@+id/pk_password"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:hint="@string/pk_password_hint"
+                          android:inputType="textPassword"/>
+            </TableRow>
 
             <!-- Password (repeat) -->
-            <TextView style="@style/label" android:text="@string/pk_password2_label"/>
-            <EditText android:id="@+id/pk_password2"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:hint="@string/pk_password2_hint"
-                      android:inputType="textPassword"/>
+            <TableRow>
+                <TextView style="@style/label" android:text="@string/pk_password2_label"/>
+                <EditText android:id="@+id/pk_password2"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:hint="@string/pk_password2_hint"
+                          android:inputType="textPassword"/>
+            </TableRow>
 
             <!-- User generated randomness because it surely is better than SecureRandom -->
             <!-- forget it for now
@@ -68,7 +77,7 @@
                   android:layout_height="match_parent"
                   android:minHeight="200dp"
                   android:background="#666666"/> -->
-        </GridLayout>
+        </TableLayout>
     </ScrollView>
 
     <Button android:id="@+id/pk_generate_button"

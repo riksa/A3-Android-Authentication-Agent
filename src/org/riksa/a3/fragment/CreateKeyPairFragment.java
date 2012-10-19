@@ -6,25 +6,18 @@
 
 package org.riksa.a3.fragment;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.ListFragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import org.riksa.a3.R;
-import org.riksa.a3.activity.CreateKeyPairActivity;
 import org.riksa.a3.exception.InvalidInputException;
 import org.riksa.a3.exception.ViewNotFoundException;
 import org.riksa.a3.model.KeyChain;
 import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
-
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 /**
  * User: riksa
@@ -59,7 +52,7 @@ public class CreateKeyPairFragment extends Fragment {
             log.debug("Key type {}", getKeyType());
             log.debug("Key bits {}", getKeyBits());
 
-            KeyChain.getInstance().generateKeyAsync( getKeyName(), getKeyType(), getKeyBits() );
+            KeyChain.getInstance().generateKeyAsync(getKeyName(), getKeyType(), getKeyBits());
             getActivity().finish(); // this has to be changed if we are using single activity at some point
         } catch (InvalidInputException e) {
             log.warn("TODO: handle specific cases");
