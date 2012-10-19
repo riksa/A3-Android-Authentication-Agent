@@ -78,7 +78,7 @@
         </TableLayout>
     </ScrollView>
 
-    <Button android:id="@+id/pk_import_button"
+    <Button android:id="@+id/pk_btn_import"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
