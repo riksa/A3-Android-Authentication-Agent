@@ -8,4 +8,4 @@ A3-Android-Authentication-Agent
 Screenshots
 ===========
 
-![alt Main activity](https://github.com/riksa/A3-Android-Authentication-Agent/blob/master/screenshots/1.png "Main activity")
+![alt Main activity](https://raw.github.com/riksa/A3-Android-Authentication-Agent/master/screenshots/1.png "Main activity")
