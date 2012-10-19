@@ -7,6 +7,7 @@
 package org.riksa.a3.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -22,7 +23,13 @@ import org.riksa.a3.R;
 import org.riksa.a3.exception.ViewNotFoundException;
 import org.riksa.a3.util.A3Utils;
 import org.riksa.a3.util.LoggerFactory;
+import org.riksa.a3.util.PrivateKeyFactory;
 import org.slf4j.Logger;
+
+import java.io.*;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 
 /**
  * User: riksa
@@ -34,6 +41,7 @@ public class ImportKeyPairFragment extends Fragment {
     private static final int BROWSE_PRIVATE = 1;
     private static final int BROWSE_PUBLIC = 2;
     public static final String ORG_OPENINTENTS_ACTION_PICK_FILE = "org.openintents.action.PICK_FILE";
+    private static final int MAX_KEY_SIZE = 1024 * 2 * 17; // some reasonable upper limits for bytes in key so that we don't even try to validate ridiculously large keys. 17kB (hex encoded) ought to be enough for everyone
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,22 +112,28 @@ public class ImportKeyPairFragment extends Fragment {
         }
     }
 
-    private boolean validatePrivateKey(String privateKey) throws ViewNotFoundException {
+    private boolean validatePrivateKey(String keyString) throws ViewNotFoundException {
         ImageView imageView = A3Utils.findView(getActivity(), ImageView.class, R.id.pk_icon_private_key_valid);
         TextView textView = A3Utils.findView(getActivity(), TextView.class, R.id.pk_text_private_key_valid);
         textView.setText(R.string.pk_text_private_key_invalid);
         imageView.setImageResource(R.drawable.btn_check_buttonless_off);
-        if (privateKey == null || privateKey.length() == 0) {
+        if (keyString == null || keyString.length() == 0) {
             return false;
         }
 
-        log.debug("privateKey={}", privateKey);
+        log.debug("privateKey={}", keyString);
 
-        String type = "RSA";
-        int bits = 1024;
-        textView.setText(getString(R.string.pk_text_private_key_valid, type, bits));
+        PrivateKey privateKey = PrivateKeyFactory.createPrivateKey(keyString.getBytes());
+        if (privateKey == null) {
+            return false;
+        }
+
+        String algorithm = privateKey.getAlgorithm();
+        int bits = PrivateKeyFactory.getBits(privateKey);
+        textView.setText(getString(R.string.pk_text_private_key_valid, algorithm, bits));
         imageView.setImageResource(R.drawable.btn_check_buttonless_on);
         return true;
+
     }
 
     private boolean validatePublicKey(String publicKey) throws ViewNotFoundException {
@@ -150,4 +164,54 @@ public class ImportKeyPairFragment extends Fragment {
         startActivityForResult(intent, BROWSE_PUBLIC);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        try {
+            Uri uri = data.getData();
+            if (uri != null) {
+                String key = readKey(uri);
+
+                if (key != null && key.length() < MAX_KEY_SIZE) {
+                    switch (requestCode) {
+                        case BROWSE_PRIVATE:
+                            EditText privateEdit = A3Utils.findView(getActivity(), EditText.class, R.id.pk_private_key_path);
+                            privateEdit.setText(key);
+                            break;
+                        case BROWSE_PUBLIC:
+                            EditText publicEdit = A3Utils.findView(getActivity(), EditText.class, R.id.pk_public_key_path);
+                            publicEdit.setText(key);
+                            break;
+                    }
+                }
+
+            }
+        } catch (ViewNotFoundException e) {
+            log.error(e.getMessage(), e);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    private String readKey(Uri uri) throws IOException {
+        InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
+        int bytesAvailable = inputStream.available();
+        if (bytesAvailable > MAX_KEY_SIZE) {
+            log.debug("Does not look like a valid key, stream size at least {} bytes", bytesAvailable);
+            return null;
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        StringBuffer sb = new StringBuffer();
+        String line;
+        while (null != (line = reader.readLine())) {
+            sb.append(line);
+            if (sb.length() > MAX_KEY_SIZE) {
+                log.debug("Does not look like a valid key, stream size at least {}", bytesAvailable);
+                return null;
+            }
+        }
+        return sb.toString();
+    }
 }
