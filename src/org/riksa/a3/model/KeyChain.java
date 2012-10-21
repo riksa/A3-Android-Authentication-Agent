@@ -6,20 +6,24 @@
 
 package org.riksa.a3.model;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 import org.riksa.a3.R;
 import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
 
+import javax.security.auth.callback.Callback;
+import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.callback.PasswordCallback;
+import javax.security.auth.callback.UnsupportedCallbackException;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.security.*;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * User: riksa
@@ -28,18 +32,31 @@ import java.util.concurrent.Executors;
  */
 public class KeyChain {
     private static final Logger log = LoggerFactory.getLogger(KeyChain.class);
-    private List<A3Key> keys;
     private static KeyChain instance;
     private Collection<KeyChainListener> listeners = new HashSet<KeyChainListener>();
     private ExecutorService executorService;
+    private KeyStoreStore keystoreStore;
 
-    private KeyChain() {
-        keys = new ArrayList<A3Key>();
+    private KeyChain(final Context context) throws KeyStoreException {
+        PromptPasswordCallback promptOpenPassword = new PromptPasswordCallback() {
+            public String getPassword() {
+                return "foo";
+            }
+        };
+
+        PromptPasswordCallback promptSavePassword = new PromptPasswordCallback() {
+            public String getPassword() {
+                return "foo";
+            }
+        };
+
+        keystoreStore = new DiskStore(context, promptOpenPassword, promptSavePassword);
+        keystoreStore.open();
     }
 
-    public static KeyChain getInstance() {
+    public static KeyChain getInstance(Context context) throws KeyStoreException {
         if (instance == null) {
-            instance = new KeyChain();
+            instance = new KeyChain(context);
         }
         return instance;
     }
@@ -52,14 +69,7 @@ public class KeyChain {
     }
 
     public A3Key getKeyWithId(String id) {
-        if (id != null) {
-            for (A3Key key : keys) {
-                if (id.equals(key.getKeyId())) {
-                    return key;
-                }
-            }
-        }
-        return null;
+        return keystoreStore.getKeyWithId(id);
     }
 
     private class KeyDefinition {
@@ -131,20 +141,14 @@ public class KeyChain {
     }
 
     public void addKey(A3Key key) {
-        synchronized (keys) {
-            if (!keys.contains(key)) {
-                keys.add(key);
-                notifyKeysChanged();
-            }
+        if (keystoreStore.addKey(key)) {
+            notifyKeysChanged();
         }
     }
 
     public void removeKey(A3Key key) {
-        synchronized (keys) {
-            if (keys.contains(key)) {
-                keys.remove(key);
-                notifyKeysChanged();
-            }
+        if (keystoreStore.removeKey(key)) {
+            notifyKeysChanged();
         }
     }
 
@@ -171,7 +175,7 @@ public class KeyChain {
     }
 
     public List<A3Key> getUnmodifiableKeys() {
-        return Collections.unmodifiableList(keys);
+        return keystoreStore.getUnmodifiableKeys();
     }
 
     public interface KeyChainListener {

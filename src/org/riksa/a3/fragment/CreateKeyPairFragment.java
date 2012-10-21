@@ -19,6 +19,8 @@ import org.riksa.a3.model.KeyChain;
 import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
 
+import java.security.KeyStoreException;
+
 /**
  * User: riksa
  * Date: 17.10.2012
@@ -52,12 +54,14 @@ public class CreateKeyPairFragment extends Fragment {
             log.debug("Key type {}", getKeyType());
             log.debug("Key bits {}", getKeyBits());
 
-            KeyChain.getInstance().generateKeyAsync(getKeyName(), getKeyType(), getKeyBits());
+            KeyChain.getInstance( getActivity() ).generateKeyAsync(getKeyName(), getKeyType(), getKeyBits());
             getActivity().finish(); // this has to be changed if we are using single activity at some point
         } catch (InvalidInputException e) {
             log.warn("TODO: handle specific cases");
             Toast.makeText(getActivity(), R.string.pk_invalid_input, Toast.LENGTH_SHORT).show();
         } catch (ViewNotFoundException e) {
+            log.error(e.getMessage(), e);
+        } catch (KeyStoreException e) {
             log.error(e.getMessage(), e);
         }
     }

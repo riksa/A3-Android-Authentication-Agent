@@ -12,6 +12,7 @@ import android.support.v4.app.ListFragment;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import org.riksa.a3.R;
 import org.riksa.a3.activity.CreateKeyPairActivity;
 import org.riksa.a3.activity.ImportKeyPairActivity;
@@ -20,6 +21,7 @@ import org.riksa.a3.model.KeyChain;
 import org.riksa.a3.util.LoggerFactory;
 import org.slf4j.Logger;
 
+import java.security.KeyStoreException;
 import java.util.List;
 
 /**
@@ -34,27 +36,35 @@ public class KeyListFragment extends ListFragment {
 
     Runnable setKeysRunnable = new Runnable() {
         public void run() {
-            setKeys(KeyChain.getInstance().getUnmodifiableKeys());
+            setKeys(keyChain.getUnmodifiableKeys());
         }
     };
 
     KeyChain.KeyChainListener keyChainListener = new KeyChain.KeyChainListener() {
         public void keyChainChanged() {
-            log.debug("keyChainChanged, keyCount={}", KeyChain.getInstance().getUnmodifiableKeys().size());
+            log.debug("keyChainChanged, keyCount={}", keyChain.getUnmodifiableKeys().size());
             getActivity().runOnUiThread(setKeysRunnable);
         }
     };
+    private KeyChain keyChain;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_keylist, container, false);
-        KeyChain.getInstance().addListener(keyChainListener);
+        try {
+            keyChain = KeyChain.getInstance(getActivity());
+            keyChain.addListener(keyChainListener);
+        } catch (KeyStoreException e) {
+            log.error(e.getMessage(), e);
+            Toast.makeText( getActivity(), e.getMessage(), Toast.LENGTH_LONG ).show();
+            getActivity().finish();
+        }
         return view;
     }
 
     @Override
     public void onDestroyView() {
-        KeyChain.getInstance().removeListener(keyChainListener);
+        keyChain.removeListener(keyChainListener);
         super.onDestroyView();
     }
 
@@ -62,7 +72,7 @@ public class KeyListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-        setKeys(KeyChain.getInstance().getUnmodifiableKeys());
+        setKeys(keyChain.getUnmodifiableKeys());
     }
 
     private void setKeys(List<A3Key> keys) {
@@ -101,11 +111,11 @@ public class KeyListFragment extends ListFragment {
         KeyListSimpleAdapter adapter = (KeyListSimpleAdapter) getListAdapter();
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         String id = adapter.getKeyIdAtPosition(menuInfo.position);
-        A3Key key = KeyChain.getInstance().getKeyWithId(id);
+        A3Key key = keyChain.getKeyWithId(id);
 
         switch (item.getItemId()) {
             case R.id.menu_delete:
-                KeyChain.getInstance().removeKey(key);
+                keyChain.removeKey(key);
                 break;
             case R.id.menu_copy_public_key:
                 if (key != null) {
